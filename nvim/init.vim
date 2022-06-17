@@ -7,6 +7,9 @@ Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 
 Plug 'franbach/miramare'
 
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
 call plug#end()
 
 
@@ -89,3 +92,10 @@ nnoremap <C-W> :tabclose<CR>
 " Map ctrl+S to save
 inoremap <c-s> <cmd>:w<cr>
 nnoremap <c-s> <cmd>:w<cr>
+
+
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
