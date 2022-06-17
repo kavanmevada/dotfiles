@@ -44,8 +44,6 @@ vim.diagnostic.config({
 })
 
 vim.cmd('COQnow -s')
-
-
 EOF
 
 
@@ -56,6 +54,9 @@ set number
 set mouse=a
 set keymodel=startsel,stopsel
 set clipboard=unnamedplus
+
+let g:coq_settings = { 'display.icons.mode': 'none' }
+
 
 
 let g:rustfmt_autosave = 1
@@ -81,11 +82,9 @@ nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
 inoremap <silent> <C-a> <cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap <silent> <C-a> <cmd>lua vim.lsp.buf.code_action()<CR>
 
+inoremap <C-P> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
 
-" Switch between tabs
-nnoremap <C-Left> :tabprevious<CR>
-nnoremap <C-Right> :tabnext<CR>
-nnoremap <C-W> :tabclose<CR>
+
 
 inoremap " ""<left>
 
@@ -94,8 +93,31 @@ inoremap <c-s> <cmd>:w<cr>
 nnoremap <c-s> <cmd>:w<cr>
 
 
+
 " Find files using Telescope command-line sugar.
 nnoremap <leader>ff <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+
+nnoremap <C-Z> u
+nnoremap <C-Y> <C-R>
+inoremap <C-Z> <C-O>u
+inoremap <C-Y> <C-O><C-R>
+
+map gn :bn<cr>
+map gp :bp<cr>
+map gd :bd<cr>  
+
+
+:map <C-Q> <ESC>:qa!<CR>
+:imap <C-Q> <ESC>:qa!<CR>
+:map <C-X> <ESC>:x<CR>
+:imap <C-X> <ESC>:x<CR>
+
+
+:map <F5> <ESC>:!cargo run<CR>
+:map <F6> <ESC>:!cargo test<CR>
+:imap <F5> <ESC>:!cargo run<CR>
+:imap <F6> <ESC>:!cargo test<CR>
