@@ -87,7 +87,7 @@ nnoremap <C-Left> :tabprevious<CR>
 nnoremap <C-Right> :tabnext<CR>
 nnoremap <C-W> :tabclose<CR>
 
-
+inoremap " ""<left>
 
 " Map ctrl+S to save
 inoremap <c-s> <cmd>:w<cr>
