@@ -4,45 +4,11 @@ Plug 'neovim/nvim-lspconfig'
 
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
-Plug 'ms-jpq/chadtree', {'branch': 'chad', 'do': 'python3 -m chadtree deps'}
 
-Plug 'kyazdani42/nvim-web-devicons'
-Plug 'morhetz/gruvbox'
+Plug 'franbach/miramare'
 
 call plug#end()
 
-
-set encoding=utf-8
-set fileencoding=utf-8
-set number                     " Show current line number
-set relativenumber             " Show relative line numbers
-set mouse=a
-set keymodel=startsel,stopsel
-
-" copy and paste
-vmap <C-c> "+yi
-vmap <C-x> "+c
-vmap <C-v> c<ESC>"+p
-imap <C-v> <ESC>"+pa
-
-" Use CTRL-S for saving, also in Insert mode
-noremap <C-S> :update<CR>
-vnoremap <C-S> <C-C>:update<CR>
-inoremap <C-S> <C-O>:update<CR>
-
-
-set encoding=UTF-8
-
-syntax on
-colorscheme gruvbox
-
-let g:gruvbox_contrast_dark='hard'
-hi! link Function GruvboxYellow
-
-
-
-
-nnoremap <C-t> <cmd>CHADopen<cr>
 
 lua << EOF
 local nvim_lsp = require('lspconfig')
@@ -65,7 +31,61 @@ nvim_lsp.rust_analyzer.setup(coq.lsp_ensure_capabilities({
         }
     }
 }))
+
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  underline = true,
+  update_in_insert = true,
+  severity_sort = true,
+})
+
 vim.cmd('COQnow -s')
 
 
 EOF
+
+
+set hidden
+set expandtab ts=4 sw=4 ai
+set completeopt=menuone,noinsert
+set number
+set mouse=a
+set keymodel=startsel,stopsel
+set clipboard=unnamedplus
+
+
+let g:rustfmt_autosave = 1
+
+
+syntax enable
+filetype plugin indent on
+colorscheme miramare
+highlight MatchParen gui=bold guibg=NONE cterm=bold ctermbg=NONE
+
+
+" Code navigation shortcuts
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+
+inoremap <silent> <C-a> <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent> <C-a> <cmd>lua vim.lsp.buf.code_action()<CR>
+
+
+" Switch between tabs
+nnoremap <C-Left> :tabprevious<CR>
+nnoremap <C-Right> :tabnext<CR>
+nnoremap <C-W> :tabclose<CR>
+
+
+
+" Map ctrl+S to save
+inoremap <c-s> <cmd>:w<cr>
+nnoremap <c-s> <cmd>:w<cr>
